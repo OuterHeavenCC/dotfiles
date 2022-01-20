@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# A dmenu wrapper script for system functions.
+
+# For non-systemd init systems.
+case "$(readlink -f /sbin/init)" in
+	*runit*) hib="doas -A zzz" ;;
+	*openrc*) reb="doas -A openrc-shutdown -r"; shut="doas -A openrc-shutdown -p" ;;
+esac
+
+cmds="\
+ Verrouiller 	slock
+ﴙ Quitter dwm	kill -TERM $(pgrep -u $USER "\bdwm$")
+勒 Redémarrer dwm	kill -HUP $(pgrep -u $USER "\bdwm$")
+鈴 Hiberner	slock ${hib:-systemctl suspend-then-hibernate -i}
+ﰇ Redémarrer	${reb:-doas reboot}
+襤 Eteindre	${shut:-doas shutdown -h now}"
+
+choice="$(echo "$cmds" | cut -d'	' -f 1 | dmenu -c -i)" || exit 1
+
+`echo "$cmds" | grep "^$choice	" | cut -d '	' -f2-`

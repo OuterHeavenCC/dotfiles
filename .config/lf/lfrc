@@ -1,0 +1,232 @@
+# == Options basiques ==
+set previewer ~/.config/lf/pv
+set cleaner ~/.config/lf/cls
+
+# set icons true
+# set ignorecase true
+set drawbox true
+# set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+# set hidden
+
+set shell bash
+set shellopts '-eu'
+set ifs "\n"
+set scrolloff 10
+set icons
+set period 1
+set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml:*.git"
+
+
+# Fichiers cachés
+map . set hidden!
+
+# == Fonctions ==
+cmd open ${{
+    case $(file --mime-type $f -bL) in
+	image/vnd.djvu|application/pdf|application/octet-stream) zathura $fx >/dev/null 2>&1 ;;
+        text/*|application/json|x-tex) $EDITOR $fx;;
+	image/x-xcf) setsid -f gimp $f >/dev/null 2>&1 ;;
+	image/svg+xml) inkview -- $f ;;
+	image/*) rotdir $f | grep -i "\.\(png\|jpg\|jpeg\|gif\|webp\|tif\|ico\)\(_large\)*$" | nsxiv -aio 2>/dev/null;;
+	audio/*) mpv --audio-display=no $f ;;
+	video/*) mpv $f -quiet >/dev/null 2>&1 ;;
+    application/vnd.oasis.opendocument|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.spreadsheet) setsid -f libreoffice $f ;;
+    application/zip) ark $f ;;
+    application/x-sc) sc-im $f ;;
+	application/pdf|application/vnd*|application/epub*|application/x-cbz) zathura $fx >/dev/null 2>&1 ;;
+        *) for f in $fx; do setsid -f $OPENER $f >/dev/null 2>&1; done;;
+    esac
+}}
+
+cmd fzf_jump ${{
+    res="$(fzf --reverse --header='Rechercher :')"
+    if [ -f "$res" ]; then
+        cmd="select"
+    elif [ -d "$res" ]; then
+        cmd="cd"
+    fi
+    lf -remote "send $id $cmd \"$res\""
+}}
+
+# Créer un dossier
+cmd mkdir ${{
+  printf "Nom du dossier : "
+  read ans
+  mkdir $ans
+}}
+
+# Créer un fichier et l'ouvre dans vim
+cmd mkfile ${{
+	printf "Nom du fichier : "
+	read ans
+	$EDITOR $ans
+}}
+
+# Changer les droits d'un fichier
+cmd chmod ${{
+    printf "Mode bits : "
+    read ans
+
+    for file in "$fx"
+      do
+        chmod $ans $file
+      done
+
+    lf -remote 'send reload'
+
+  }}
+
+# Gérer les archives
+cmd unarchive ${{
+  case "$f" in
+		*.tar.bz2|*.tbz2) tar xvjf "$f" ;;
+		*.tar.xz) tar -xf "$f" ;;
+		*.tar.gz|*.tgz) tar xvzf "$f" ;;
+		*.lzma) unlzma "$f" ;;
+		*.bz2) bunzip2 "$f" ;;
+		*.rar) unrar x -ad "$f" ;;
+		*.gz) gunzip "$f" ;;
+		*.tar) tar xvf "$f" ;;
+		*.zip) unzip "$f" ;;
+		*.Z) uncompress "$f" ;;
+		*.7z) 7z x "$f" ;;
+		*.xz) unxz "$f" ;;
+    *.zst) zstd -d "$f" ;;
+		*.exe) cabextract "$f" ;;
+		*) printf "extract: '%s' - unknown archive method\\n" "$f" ;;
+  esac
+}}
+
+cmd zip %zip -r "$f.zip" "$f"
+cmd tar %tar cvf "$f.tar" "$f"
+cmd targz %tar cvzf "$f.tar.gz" "$f"
+cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
+cmd dragon %dragon-drag-and-drop -a -x $fx
+cmd doasedit %st -e doasedit "$f"
+
+cmd trash %set -f; trash $fx
+
+# Changer le fond d'écran
+cmd setbg "$1"
+
+# Bulkrename
+cmd vimv $vimv
+
+# == Mapping ==
+
+# Suppression des bindings de base
+map m
+map o
+map n
+map "'"
+map '"'
+map d
+map c
+map e
+map f
+map y
+map r
+map i
+
+# Mapping sk
+map f fzf_jump
+
+# Mapping des archives
+map x unarchive
+
+# Mapping général
+map <c-r> reload
+map <enter> enter
+map o open
+map O $mimeopen --ask $f
+map C clear
+map U unselect
+
+# Mapping des fonctions
+
+map dd cut
+map de doasedit
+map dr dragon
+
+map p paste
+
+map yy copy
+
+map mkf mkfile
+
+map mkd mkdir
+
+map tp trash
+map D delete
+
+map chm chmod
+
+map co $compiler "$f"
+
+map bg $setbg $f
+
+map ee $$EDITOR "$f"
+
+# Mapping du renommage
+map A rename # at the very end
+map cc push A<c-u> # new rename
+map I push A<c-a> # at the very beginning
+map i push A<a-b><a-b><a-f> # before extention
+map a push A<a-b> # after extention
+map br vimv # Bulk rename du répertoire actuel
+
+# mapping du Déplacement
+map gg top
+map G bottom
+
+# == Raccourcis ==
+
+# Root
+map gr 					cd /
+map g\/ 				cd /
+map ge 					cd /etc
+map gf          cd /usr/share/fonts/
+map gu 					cd /usr/bin
+map gb 					cd /boot
+
+
+# Home
+map gh 					cd ~
+
+# Configuration
+map gc 				cd ~/.config
+map gC        cd ~/.config/ledger/
+
+# Local
+map gl 					cd ~/.local
+map gsh 				cd ~/.local/bin
+map gsrc 				cd ~/.local/src
+
+# Documents
+map gd 					cd ~/Documents
+
+# Images
+map gi				cd ~/Images
+map gw 				cd ~/Images/Wallpapers
+
+# Musique
+
+# USB
+map gm              cd ~/Musique
+map gM              cd /mnt
+
+# Programmation
+map gp 				cd ~/Programmation
+
+# Téléchargements
+map gt 					cd ~/Téléchargements
+
+# Trash
+map gT                  cd ~/.local/share/Trash
+
+# Vidéos
+map gv 					cd /home/corentin/Vidéos
+
+# Wiki
+
+map gW                  cd /home/corentin/.Wiki

@@ -1,0 +1,46 @@
+[Default Applications]
+text/x-shellscript=text.desktop;
+x-scheme-handler/magnet=torrent.desktop;
+application/x-bittorrent=torrent.desktop;
+x-scheme-handler/mailto=mail.desktop
+text/plain=text.desktop;
+application/postscript=pdf.desktop;
+application/pdf=pdf.desktop;
+application/cb=pdf.desktop;
+application/cbz=pdf.desktop
+image/jpeg=img.desktop;
+image/gif=img.desktop;
+application/rss+xml=rss.desktop
+x-scheme-handler/lbry=lbry.desktop
+inode/directory=file.desktop
+x-scheme-handler/tg=userapp-Telegram Desktop-E7MR20.desktop
+x-scheme-handler/http=chromium.desktop
+x-scheme-handler/https=chromium.desktop
+x-scheme-handler/chrome=chromium.desktop
+text/html=chromium.desktop
+application/x-extension-htm=chromium.desktop
+application/x-extension-html=chromium.desktop
+application/x-extension-shtml=chromium.desktop
+application/xhtml+xml=chromium.desktop
+application/x-extension-xhtml=chromium.desktop
+application/x-extension-xht=chromium.desktop
+x-scheme-handler/discord-712465656758665259=discord-712465656758665259.desktop
+
+[Added Associations]
+x-scheme-handler/tg=userapp-Telegram Desktop-E7MR20.desktop;
+x-scheme-handler/http=chromium.desktop;
+x-scheme-handler/https=chromium.desktop;
+x-scheme-handler/chrome=chromium.desktop;
+text/html=chromium.desktop;
+application/x-extension-htm=chromium.desktop;
+application/x-extension-html=chromium.desktop;
+application/x-extension-shtml=chromium.desktop;
+application/xhtml+xml=chromium.desktop;
+application/x-extension-xhtml=chromium.desktop;
+application/x-extension-xht=chromium.desktop;
+application/pdf=gimp.desktop;wine-extension-pdf.desktop;
+application/x-shellscript=nvim.desktop;
+video/x-matroska=mpv.desktop;
+image/png=sxiv.desktop;
+application/x-sc=sc-usercreated-1.desktop;
+text/markdown=nvim.desktop;

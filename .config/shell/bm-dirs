@@ -1,0 +1,19 @@
+# You can add comments to these files with #
+b  /boot/
+c  /home/corentin/.config
+d   /home/corentin/Documents
+e   /etc/
+h   /home/
+i   /home/corentin/Images
+m   /home/corentin/Musique
+nord   /home/corentin/Images/Wallpapers/Nordified
+nsfw   /home/corentin/Images/Wallpapers/nsfw
+pr   /home/corentin/Programmation
+pw  /home/corentin/.local/share/password-store
+sh  /home/corentin/.local/bin
+src /home/corentin/.local/src
+u  /usr/bin/
+USB  /mnt
+v  /home/Vidéos
+t   /home/corentin/Téléchargements
+w   /home/corentin/Images/Wallpapers

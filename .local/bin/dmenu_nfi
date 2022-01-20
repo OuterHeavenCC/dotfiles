@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Script to quickly search for a nerd font icon with dmenu, and copy it to the clipboard
+
+NFI_PATH=~/.local/share/larbs/nerdfonticons
+
+CHOSEN=$(cat $NFI_PATH | dmenu -c -l 30 -i | sed 's/\ .*//')
+
+[ -z "$CHOSEN" ] && exit
+
+if [ -n "$1" ]; then
+	xdotool type "$CHOSEN"
+else
+	printf "$CHOSEN" | xclip -selection clipboard
+	notify-send "'$CHOSEN' copié dans le presse papiers." &
+fi

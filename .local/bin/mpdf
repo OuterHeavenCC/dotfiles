@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Ecrit les manuels en pdf pour une meilleure lisibilité
+
+apropos . | dmenu -c -l 30 | awk '{print $1}' | xargs -I {} man -Tpdf {} | zathura -

@@ -1,0 +1,14 @@
+qemu-system-x86_64 \
+-enable-kvm \
+-m 4096 \
+-smp 4 \
+-cpu host \
+-soundhw es1370 \
+-device virtio-mouse-pci -device virtio-keyboard-pci \
+-device virtio-vga-gl,xres=1280,yres=720 \
+-serial mon:stdio \
+-boot menu=on \
+-net nic \
+-net user,hostfwd=tcp::4444-:5555 \
+-display sdl,gl=on \
+-hda $HOME/.config/android-x86/androidx86_hda.img

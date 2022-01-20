@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# dmenu theming
+lines="-l 20"
+colors="-nb #2C323E -nf #9899a0 -sb #BF616A -sf #2C323E"
+
+selected="$(ps -a -u $USER | \
+            dmenu -c -i -p "Rechercher le processus à terminer" \
+            $lines $colors | \
+            awk '{print $1" "$4}')"; 
+
+if [[ ! -z $selected ]]; then
+
+    answer="$(echo -e "Oui\nNon" | \
+            dmenu -c -i -p "$selected va être terminé, êtes-vous sûr ?" \
+            $lines $colors )"
+
+    if [[ $answer == "Oui" ]]; then
+        selpid="$(awk '{print $1}' <<< $selected)"; 
+        kill -9 $selpid
+    fi
+fi
+
+exit 0

@@ -1,0 +1,67 @@
+#!/bin/sh
+
+# Pourquoi utiliser vim quand on a neovim ?
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d"
+
+# Démarrage automatique de startx avec le fichier xinitrc
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# Les options qu'on veut toujours utiliser
+alias \
+  cp="cp -iv" \
+  mv="mv -iv" \
+  rm="rm -vI" \
+  bc="bc -ql" \
+  mkd="mkdir -pv" \
+  yta="yt-dlp -x -f bestaudio/best" \
+  ffmpeg="ffmpeg -hide_banner" \
+  mpv="setsid -f mpv" \
+  lf="lfimg" \
+  rsync="rsync -v" \
+  spt="launch-spt" \
+  nohup="nohup $@ > /dev/null" \
+  synergys="synergy --config ~/.config/Synergy/synergyrc" \
+  ytdl='youtube-dl -f 140+137 "$@"' \
+  merge='ffmpeg -f concat -safe 0 -i files.txt -c copy output.mp4' \
+  nvim='lvim' \
+  du='dust' \
+  df='duf' \
+  gen='rm -f dst/.files && ssg6 src dst "Le blog de Corentin" "https://chaminand.com"' \
+  deploy='rsync --rsync-path "sudo rsync" -avP ~/Programmation/Web/Blog/dst/ debian@vps:/var/www/chaminand' \
+  curlftpfs='curlftpfs -o ipv4' \
+  pf='peerflix -k' \
+  groff='groff -ms -k -T pdf' \
+  dict='stardict' \
+  covid='curl -s "https://corona-stats.online?top=20&source=2&minimal=true&emojis=true"' \
+  sudo='doas' \
+  procs='procs -p disable' \
+
+# Un peu de couleur
+alias \
+	ls="exa -h --color=auto --group-directories-first --icons" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi"
+
+# C'est trop long à écrire
+alias \
+	ka="killall" \
+	g="git" \
+	trem="transmission-remote" \
+	YT="youtube-viewer" \
+	sdn="doas shutdown -h now" \
+  psdn="doas pacman -Syu --noconfirm && doas shutdown -h now" \
+	e="$EDITOR" \
+	v="$EDITOR" \
+	p="paru" \
+  xdt="xdotool" \
+	zat="zathura" \
+  cl="clear" \
+
+alias \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+
+# Qui a inventé des noms de programmes aussi cons ?
+alias \
+  podomoro='pomotroid' \
