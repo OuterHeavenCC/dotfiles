@@ -14,7 +14,7 @@ unsetopt PROMPT_SP
 # Default programs:
 export EDITOR="lvim"
 export TERMINAL="st"
-export BROWSER="chromium"
+export BROWSER="librewolf"
 export LOCATION="Ile-Tudy"
 export PRINTER="HP_ENVY_6400_series_6B31CE"
 

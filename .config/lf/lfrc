@@ -207,6 +207,7 @@ map gd 					cd ~/Documents
 
 # Images
 map gi				cd ~/Images
+map gj        cd ~/.local/share/Steam/steamapps/common/
 map gw 				cd ~/Images/Wallpapers
 
 # Musique
